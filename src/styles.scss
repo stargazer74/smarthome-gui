@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import '../node_modules/@angular/material/theming';
+@import 'themes/black-theme.scss';
+
+@include mat-core();
+
+
+.default-theme {
+  @include angular-material-theme($smarthome-gui-black-theme);
+}
