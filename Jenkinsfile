@@ -1,5 +1,5 @@
-node('docker') {
- 
-    stage 'Checkout'
-        checkout scm
+node {
+       stage 'Checkout'
+              deleteDir()
+              checkout scm
 }
