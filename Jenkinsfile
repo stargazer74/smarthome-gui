@@ -1,11 +1,15 @@
-node {
-       stage ('Checkout'){
-              deleteDir()
-              checkout scm
-       }
-       stage('NPM Install') {
-              withEnv(["NPM_CONFIG_LOGLEVEL=warn"]) {
-              sh 'npm install'
-              }
-       }
+pipeline {
+    agent {
+        docker {
+            image 'node:6-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'npm install' 
+            }
+        }
+    }
 }
