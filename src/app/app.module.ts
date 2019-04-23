@@ -6,20 +6,21 @@ import { AppComponent } from './components/app.component';
 import { ShoppinglistComponent } from './components/shoppinglist/shoppinglist.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MainnavComponent } from './components/mainnav/mainnav.component';
-import {MatButtonModule, MatMenuModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatMenuModule} from '@angular/material';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShoppinglistComponent,
-    MainnavComponent
+    MainnavComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
