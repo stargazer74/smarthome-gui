@@ -7,12 +7,14 @@ import { ShoppinglistComponent } from './components/shoppinglist/shoppinglist.co
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MainnavComponent } from './components/mainnav/mainnav.component';
 import {MatButtonModule, MatIconModule, MatMenuModule} from '@angular/material';
+import { WeekmenuComponent } from './components/weekmenu/weekmenu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShoppinglistComponent,
     MainnavComponent,
+    WeekmenuComponent
   ],
   imports: [
     BrowserModule,
