@@ -12,4 +12,8 @@ export class WeekmenuComponent implements OnInit {
   ngOnInit() {
   }
 
+  onSearchFieldChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    console.log(target.value);
+  }
 }
