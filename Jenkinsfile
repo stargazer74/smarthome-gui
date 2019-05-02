@@ -1,12 +1,12 @@
 pipeline {
-    def app
     agent {
         docker {
             image 'node:6-alpine'
             args '-p 3000:3000'
         }
     }
-    stages {
+    node {
+        def app
         stage('Test') {
             steps {
                 sh 'npm test'
