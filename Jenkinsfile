@@ -1,15 +1,22 @@
 pipeline {
     agent {
         docker {
-            image 'node:6-alpine' 
-            args '-p 3000:3000' 
+            image 'node:6-alpine'
+            args '-p 3000:3000'
         }
     }
     stages {
-        stage('Build') { 
+        def app
+        stage('Test') {
             steps {
-                sh 'npm install' 
+                sh 'npm test'
             }
+        }
+        stage('Build image') {
+            /* This builds the actual image; synonymous to
+             * docker build on the command line */
+
+            app = docker.build("smarthome-continuum/smarthome-gui")
         }
     }
 }
