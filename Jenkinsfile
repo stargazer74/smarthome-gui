@@ -5,12 +5,10 @@ node {
 
       checkout scm
   }
-  stages {
-      stage('Build image') {
-          /* This builds the actual image; synonymous to
-           * docker build on the command line */
+  stage('Build image') {
+      /* This builds the actual image; synonymous to
+       * docker build on the command line */
 
-          app = docker.build("smarthome-continuum/smarthome-gui")
-      }
+      app = docker.build("smarthome-continuum/smarthome-gui")
   }
 }
