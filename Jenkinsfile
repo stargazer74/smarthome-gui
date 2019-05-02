@@ -1,22 +1,16 @@
-pipeline {
-    agent {
-        docker {
-            image 'node:6-alpine'
-            args '-p 3000:3000'
-        }
-    }
-    node {
-        def app
-        stage('Test') {
-            steps {
-                sh 'npm test'
-            }
-        }
-        stage('Build image') {
-            /* This builds the actual image; synonymous to
-             * docker build on the command line */
+node {
+  def app
+  stage('Clone repository') {
+      /* Let's make sure we have the repository cloned to our workspace */
 
-            app = docker.build("smarthome-continuum/smarthome-gui")
-        }
-    }
+      checkout scm
+  }
+  stages {
+      stage('Build image') {
+          /* This builds the actual image; synonymous to
+           * docker build on the command line */
+
+          app = docker.build("smarthome-continuum/smarthome-gui")
+      }
+  }
 }
