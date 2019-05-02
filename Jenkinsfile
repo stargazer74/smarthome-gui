@@ -1,4 +1,5 @@
 pipeline {
+    def app
     agent {
         docker {
             image 'node:6-alpine'
@@ -6,7 +7,6 @@ pipeline {
         }
     }
     stages {
-        def app
         stage('Test') {
             steps {
                 sh 'npm test'
