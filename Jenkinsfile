@@ -13,9 +13,7 @@ pipeline {
       }
       stage ('Build Container') {
         steps {
-          script {
-            docker.build('test')
-          }
+          sh 'docker build -t smarthome-continuum/smarthome-gui .'
         }
       }
     }
