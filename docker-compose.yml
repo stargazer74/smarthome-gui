@@ -1,0 +1,9 @@
+version: '3'
+
+services: 
+       smarthome-gui:
+              image: smarthome-continuum/smarthome-gui:latest
+              ports:
+                     - 7078:80
+              restart: unless-stopped
+              name: smarthome-gui

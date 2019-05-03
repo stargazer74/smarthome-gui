@@ -18,5 +18,12 @@ pipeline {
         sh 'docker build -t smarthome-continuum/smarthome-gui .'
       }
     }
+    stage ('Deploy') {
+      agent any
+      steps {
+        step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'StopAllServices'], useCustomDockerComposeFile: true])
+        step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: true])
+      }
+    }
   }
 }
