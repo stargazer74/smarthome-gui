@@ -6,4 +6,4 @@ services:
               ports:
                      - 7078:80
               restart: unless-stopped
-              name: smarthome-gui
+              container_name: smarthome-gui
