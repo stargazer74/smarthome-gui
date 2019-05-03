@@ -17,7 +17,11 @@ pipeline {
         }
       }
       stage ('Build Container') {
-        docker.build('test')
+        steps {
+          script {
+            docker.build('test')
+          }
+        }
       }
     }
 }
