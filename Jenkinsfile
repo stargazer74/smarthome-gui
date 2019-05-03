@@ -16,7 +16,8 @@ pipeline {
       agent any
       steps {
         sh 'docker build -t smarthome-continuum/smarthome-gui .'
-        sh 'docker-compose up -d'
+        step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: false])
+        sh 'docker image prune -a -f'
       }
     }
   }
