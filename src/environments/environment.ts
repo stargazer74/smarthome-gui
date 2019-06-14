@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:6080/apigateway'
+  apiUrl: 'http://localhost:7080/apigateway'
 };
 
 /*

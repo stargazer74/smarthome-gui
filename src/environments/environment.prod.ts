@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:6080/apigateway'
+  apiUrl: 'http://localhost:7080/apigateway'
 };
