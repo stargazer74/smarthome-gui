@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {WeekMenuDto} from '../dto/weekmenu/week-menu-dto';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
+import {WeekMenuListDto} from '../dto/weekmenu/week-menu-list-dto';
 
 const API_URL = environment.apiUrl;
 
@@ -14,8 +14,8 @@ export class WeekmenuService {
   constructor(private http: HttpClient) {
   }
 
-  listWeekMenus(): Observable<WeekMenuDto[]> {
-    return this.http.get<WeekMenuDto[]>(API_URL + '/weekMenus/list');
+  listWeekMenus(): Observable<WeekMenuListDto> {
+    return this.http.get<WeekMenuListDto>(API_URL + '/weekMenus/list');
   }
 
 }

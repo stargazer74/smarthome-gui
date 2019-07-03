@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WeekmenuService} from '../../services/weekmenu.service';
+import {WeekMenuListDto} from '../../dto/weekmenu/week-menu-list-dto';
 
 @Component({
   selector: 'app-weekmenu',
@@ -8,17 +9,18 @@ import {WeekmenuService} from '../../services/weekmenu.service';
 })
 export class WeekmenuComponent implements OnInit {
 
-  constructor(private weekMenuService: WeekmenuService) { }
+  constructor(private weekMenuService: WeekmenuService) {
+  }
+
+  private weekMenuListDto: WeekMenuListDto;
 
   ngOnInit() {
+    this.weekMenuService.listWeekMenus().subscribe(result => {
+      this.weekMenuListDto = result;
+    });
   }
 
   onSearchFieldChange(event: Event) {
     const target = event.target as HTMLInputElement;
-    const observable = this.weekMenuService.listWeekMenus();
-    observable.subscribe(result => {
-      console.log(result);
-    });
-    console.log(target.value);
   }
 }

@@ -21,7 +21,7 @@ RUN npm run ng build -- --prod --output-path=dist
 
 ### STAGE 2: Setup ###
 
-FROM nginx:1.14.1-alpine
+FROM arm32v7/nginx:latest
 
 ## Copy our default nginx config
 COPY nginx/default.conf /etc/nginx/conf.d/
