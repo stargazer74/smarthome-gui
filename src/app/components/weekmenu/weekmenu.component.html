@@ -1,45 +1,43 @@
 <div class="row">
   <div class="col-md-3 p-3">
-    <div class="input-group search">
-      <input (keyup)="onSearchFieldChange($event)" type="text" class="form-control search-input"
-             placeholder="Suche..."/>
-      <div class="input-group-append">
-        <span class="input-group-text fa fa-search search-icon"></span>
+    <div class="container">
+      <div class="input-group search mb-2">
+        <input (keyup)="onSearchFieldChange($event)" type="text" class="form-control search-input"
+               placeholder="Suche..."/>
+        <div class="input-group-append">
+          <span class="input-group-text fa fa-search search-icon"></span>
+        </div>
       </div>
-    </div>
-    <div cdkDropList id="menuListHtml" [cdkDropListData]="menuList" [cdkDropListConnectedTo]="['weekMenuListHtml']"
-         class="item-list" (cdkDropListDropped)="drop($event)">
-      <div class="item-box" *ngFor="let item of menuList" cdkDrag>{{item.name}}</div>
+      <div cdkDropList id="menuListHtml" [cdkDropListData]="menuList" [cdkDropListConnectedTo]="['weekMenuListHtml']"
+           class="item-list">
+        <div class="item-box" *ngFor="let item of menuList" cdkDrag>{{item.name}}</div>
+      </div>
     </div>
   </div>
   <div class="col-md-9 p-3">
-    <ngb-tabset>
-      <ngb-tab>
-        <ng-template ngbTabTitle>Wochenplan</ng-template>
-        <ng-template ngbTabContent>
-          <div cdkDropList id="weekMenuListHtml" [cdkDropListData]="weekList" class="item-list"
-               (cdkDropListDropped)="drop($event)">
-            <div class="item-box" *ngFor="let item of weekList" cdkDrag>{{item.name}}</div>
-          </div>
-        </ng-template>
-      </ngb-tab>
-      <ngb-tab>
-        <ng-template ngbTabTitle>Einstellungen</ng-template>
-        <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee
-          squid.
-          <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko
-            farm-to-table
-            craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad
-            vinyl
-            cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS
-            salvia
-            yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable
-            jean
-            shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher
-            vero
-            sint qui sapiente accusamus tattooed echo park.</p>
-        </ng-template>
-      </ngb-tab>
-    </ngb-tabset>
+    <div class="container-fluid">
+      <ngb-tabset>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Wochenplan</ng-template>
+          <ng-template ngbTabContent>
+            <div class="row">
+              <div class="col-md-8">
+                <div cdkDropList id="weekMenuListHtml" [cdkDropListData]="weekList" class="item-list mt-3"
+                     (cdkDropListDropped)="drop($event)">
+                  <div class="item-box" *ngFor="let item of weekList" cdkDrag>{{item.name}}</div>
+                </div>
+              </div>
+              <div class="col-md-4"></div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Einstellungen</ng-template>
+          <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee
+            squid.
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
   </div>
 </div>

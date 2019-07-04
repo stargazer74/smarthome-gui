@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {WeekMenuListDto} from '../dto/weekmenu/week-menu-list-dto';
+import {validate} from 'class-validator';
 
 const API_URL = environment.apiUrl;
 
@@ -15,7 +16,16 @@ export class WeekmenuService {
   }
 
   listWeekMenus(): Observable<WeekMenuListDto> {
-    return this.http.get<WeekMenuListDto>(API_URL + '/weekMenus/list');
+    const weekMenuListDto = this.http.get<WeekMenuListDto>(API_URL + '/weekMenus/list');
+    validate(weekMenuListDto).then(errors => {
+        if (errors.length > 0) {
+          console.log('validation failed. errors: ', errors);
+        } else {
+          return weekMenuListDto;
+        }
+      }
+    );
+    return weekMenuListDto;
   }
 
 }
