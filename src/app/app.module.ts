@@ -10,6 +10,7 @@ import {MatButtonModule, MatIconModule, MatMenuModule} from '@angular/material';
 import { WeekmenuComponent } from './components/weekmenu/weekmenu.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {HttpClientModule} from '@angular/common/http';
     MatMenuModule,
     MatIconModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,10 +2,14 @@
   <div class="col-md-3 p-3">
     <div class="input-group search">
       <input (keyup)="onSearchFieldChange($event)" type="text" class="form-control search-input"
-             placeholder="Suche..." />
+             placeholder="Suche..."/>
       <div class="input-group-append">
         <span class="input-group-text fa fa-search search-icon"></span>
       </div>
+    </div>
+    <div cdkDropList id="menuListHtml" [cdkDropListData]="menuList" [cdkDropListConnectedTo]="['weekMenuListHtml']"
+         class="item-list" (cdkDropListDropped)="drop($event)">
+      <div class="item-box" *ngFor="let item of menuList" cdkDrag>{{item.name}}</div>
     </div>
   </div>
   <div class="col-md-9 p-3">
@@ -13,13 +17,10 @@
       <ngb-tab>
         <ng-template ngbTabTitle>Wochenplan</ng-template>
         <ng-template ngbTabContent>
-          <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro
-            synth
-            master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
-            keffiyeh
-            dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia
-            cillum
-            iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+          <div cdkDropList id="weekMenuListHtml" [cdkDropListData]="weekList" class="item-list"
+               (cdkDropListDropped)="drop($event)">
+            <div class="item-box" *ngFor="let item of weekList" cdkDrag>{{item.name}}</div>
+          </div>
         </ng-template>
       </ngb-tab>
       <ngb-tab>

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {WeekmenuService} from '../../services/weekmenu.service';
-import {WeekMenuListDto} from '../../dto/weekmenu/week-menu-list-dto';
+import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {WeekMenuDto} from '../../dto/weekmenu/week-menu-dto';
 
 @Component({
   selector: 'app-weekmenu',
@@ -11,16 +12,29 @@ export class WeekmenuComponent implements OnInit {
 
   constructor(private weekMenuService: WeekmenuService) {
   }
+  private menuList: WeekMenuDto[];
 
-  private weekMenuListDto: WeekMenuListDto;
+  private weekList: WeekMenuDto[];
 
   ngOnInit() {
     this.weekMenuService.listWeekMenus().subscribe(result => {
-      this.weekMenuListDto = result;
+      this.menuList = result.weekMenuDtos;
     });
+    this.weekList = [];
   }
 
   onSearchFieldChange(event: Event) {
     const target = event.target as HTMLInputElement;
+  }
+
+  drop(event: CdkDragDrop<WeekMenuDto[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      copyArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
   }
 }
