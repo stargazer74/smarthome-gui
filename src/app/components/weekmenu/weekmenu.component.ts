@@ -42,4 +42,8 @@ export class WeekmenuComponent implements OnInit {
   deleteItem(index: number) {
     this.weekList.splice(index, 1);
   }
+
+  showIngredients(id: number) {
+    console.log('Foobar' + id);
+  }
 }
