@@ -24,9 +24,11 @@
               <div class="col-md-8">
                 <div cdkDropList id="weekMenuListHtml" [cdkDropListData]="weekList" class="item-list mt-3"
                      (cdkDropListDropped)="drop($event)">
-                  <div class="item-box" *ngFor="let item of weekList" cdkDrag>{{item.name}}
+                  <div class="item-box item-box-small" *ngFor="let item of weekList; let i = index" cdkDrag>{{item.name}}
                     <div class="input-group-append">
-                      <span class="fa fa-close close-icon"></span>
+                      <button type="button" class="btn btn-secondary" (click)="deleteItem(i)">
+                        <span class="fa fa-close close-icon"></span>
+                      </button>
                     </div>
                   </div>
                 </div>

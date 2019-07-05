@@ -12,6 +12,7 @@ export class WeekmenuComponent implements OnInit {
 
   constructor(private weekMenuService: WeekmenuService) {
   }
+
   private menuList: WeekMenuDto[];
 
   private weekList: WeekMenuDto[];
@@ -36,5 +37,9 @@ export class WeekmenuComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+  }
+
+  deleteItem(index: number) {
+    this.weekList.splice(index, 1);
   }
 }
