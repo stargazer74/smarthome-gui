@@ -24,7 +24,11 @@
               <div class="col-md-8">
                 <div cdkDropList id="weekMenuListHtml" [cdkDropListData]="weekList" class="item-list mt-3"
                      (cdkDropListDropped)="drop($event)">
-                  <div class="item-box" *ngFor="let item of weekList" cdkDrag>{{item.name}}</div>
+                  <div class="item-box" *ngFor="let item of weekList" cdkDrag>{{item.name}}
+                    <div class="input-group-append">
+                      <span class="fa fa-close close-icon"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4"></div>
