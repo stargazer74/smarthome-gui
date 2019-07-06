@@ -13,7 +13,7 @@ export class WeekmenuComponent implements OnInit {
   constructor(private weekMenuService: WeekmenuService) {
   }
 
-  private menuList: WeekMenuDto[];
+  menuList: WeekMenuDto[];
 
   weekList: WeekMenuDto[];
 
