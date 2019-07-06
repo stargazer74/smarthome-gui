@@ -15,7 +15,7 @@ export class WeekmenuComponent implements OnInit {
 
   private menuList: WeekMenuDto[];
 
-  private weekList: WeekMenuDto[];
+  weekList: WeekMenuDto[];
 
   ngOnInit() {
     this.weekMenuService.listWeekMenus().subscribe(result => {
