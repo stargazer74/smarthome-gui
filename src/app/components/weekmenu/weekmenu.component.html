@@ -33,7 +33,11 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-4"></div>
+              <div class="col-md-4">
+                <ul class="list-group-flush mt-3">
+                  <li class="list-group-item" *ngFor="let ingredient of ingredients">{{ingredient.amount}} {{ingredient.name}}</li>
+                </ul>
+              </div>
             </div>
           </ng-template>
         </ngb-tab>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {WeekmenuService} from '../../services/weekmenu.service';
 import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {WeekMenuDto} from '../../dto/weekmenu/week-menu-dto';
+import {IngredientDto} from '../../dto/weekmenu/ingredient-dto';
 
 @Component({
   selector: 'app-weekmenu',
@@ -16,6 +17,8 @@ export class WeekmenuComponent implements OnInit {
   menuList: WeekMenuDto[];
 
   weekList: WeekMenuDto[];
+
+  ingredients: IngredientDto[];
 
   ngOnInit() {
     this.weekMenuService.listWeekMenus().subscribe(result => {
@@ -45,5 +48,7 @@ export class WeekmenuComponent implements OnInit {
 
   showIngredients(id: number) {
     console.log('Foobar' + id);
+    const weekMenuDto = this.weekList.find(item => item.id === id);
+    this.ingredients = weekMenuDto.ingredients;
   }
 }

@@ -1,11 +1,12 @@
 import {JsonObject, JsonProperty} from 'json2typescript';
 import {IsDefined} from 'class-validator';
+import {IngredientDto} from './ingredient-dto';
 
 @JsonObject('WeekMenuDto')
 export class WeekMenuDto {
 
   @IsDefined()
-  @JsonProperty('name', Number)
+  @JsonProperty('id', Number)
   public id: number = null;
 
   @IsDefined()
@@ -13,7 +14,7 @@ export class WeekMenuDto {
   public name: string = null;
 
   @IsDefined()
-  @JsonProperty('ingredients', [String])
-  public ingredients: string[] = null;
+  @JsonProperty('ingredients', [IngredientDto])
+  public ingredients: IngredientDto[] = null;
 
 }
