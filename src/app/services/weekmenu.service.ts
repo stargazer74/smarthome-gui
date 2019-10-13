@@ -16,7 +16,7 @@ export class WeekmenuService {
   }
 
   listWeekMenus(): Observable<WeekMenuListDto> {
-    const weekMenuListDto = this.http.get<WeekMenuListDto>('/weekMenus/list');
+    const weekMenuListDto = this.http.get<WeekMenuListDto>(API_URL + '/weekMenus/list');
     validate(weekMenuListDto).then(errors => {
         if (errors.length > 0) {
           console.log('validation failed. errors: ', errors);
