@@ -16,4 +16,8 @@ export class IngredientDto {
   @JsonProperty('amount', String)
   public amount: string = null;
 
+  @IsDefined()
+  @JsonProperty('unitOfMeasure', String)
+  public unitOfMeasure: string = null;
+
 }
