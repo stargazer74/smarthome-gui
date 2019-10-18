@@ -5,7 +5,6 @@ import {WeekMenuDto} from '../../dto/weekmenu/week-menu-dto';
 import {IngredientDto} from '../../dto/weekmenu/ingredient-dto';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {WeekMenuRequestDto} from '../../dto/weekmenu/week-menu-request-dto';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-weekmenu',
@@ -77,9 +76,16 @@ export class WeekmenuComponent implements OnInit {
   }
 
   onSubmit() {
+    this.weekMenuRequestDto = this.weekMenuFormGroup.value as WeekMenuRequestDto;
+    console.log(this.weekMenuRequestDto);
     this.submitted = true;
     if (this.weekMenuFormGroup.invalid) {
       return;
     }
+  }
+
+  menuItemClicked(id: number) {
+    const weekMenuDto = this.tempMenuList.find(menu => menu.id === id);
+    this.weekMenuFormGroup.get('name').setValue(weekMenuDto.name);
   }
 }

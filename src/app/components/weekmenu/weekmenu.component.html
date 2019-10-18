@@ -10,7 +10,8 @@
       </div>
       <div cdkDropList id="menuListHtml" [cdkDropListData]="menuList" [cdkDropListConnectedTo]="['weekMenuListHtml']"
            class="item-list">
-        <div class="item-box" *ngFor="let item of menuList" cdkDrag>{{item.name}}</div>
+        <div class="item-box" *ngFor="let item of menuList" cdkDrag
+             (click)="menuItemClicked(item.id)">{{item.name}}</div>
       </div>
     </div>
   </div>
