@@ -34,7 +34,7 @@ export class WeekmenuComponent implements OnInit {
     });
     this.weekList = [];
     this.weekMenuFormGroup = this.fb.group({
-      name: new FormControl('', [Validators.required])
+      name: new FormControl(this.weekMenuRequestDto.name, [Validators.required])
     });
   }
 
@@ -67,10 +67,7 @@ export class WeekmenuComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.weekMenuFormGroup.valid);
-    console.log(this.weekMenuRequestDto);
     if (this.weekMenuFormGroup.invalid) {
-      console.log('WARUM????????????????????');
       return;
     }
   }
