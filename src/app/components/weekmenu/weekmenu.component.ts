@@ -5,6 +5,7 @@ import {WeekMenuDto} from '../../dto/weekmenu/week-menu-dto';
 import {IngredientDto} from '../../dto/weekmenu/ingredient-dto';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {WeekMenuRequestDto} from '../../dto/weekmenu/week-menu-request-dto';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-weekmenu',
@@ -20,6 +21,8 @@ export class WeekmenuComponent implements OnInit {
 
   menuList: WeekMenuDto[];
 
+  tempMenuList: WeekMenuDto[];
+
   weekList: WeekMenuDto[];
 
   ingredients: IngredientDto[];
@@ -31,6 +34,7 @@ export class WeekmenuComponent implements OnInit {
   ngOnInit() {
     this.weekMenuService.listWeekMenus().subscribe(result => {
       this.menuList = result.weekMenuDtos;
+      this.tempMenuList = result.weekMenuDtos;
     });
     this.weekList = [];
     this.weekMenuFormGroup = this.fb.group({
@@ -38,10 +42,17 @@ export class WeekmenuComponent implements OnInit {
     });
   }
 
-  get form() { return this.weekMenuFormGroup.controls; }
+  get form() {
+    return this.weekMenuFormGroup.controls;
+  }
 
   onSearchFieldChange(event: Event) {
     const target = event.target as HTMLInputElement;
+    if (target.value.length > 3) {
+      this.menuList = this.menuList.filter(menu => menu.name.toLowerCase().includes(target.value.toLowerCase()));
+    } else {
+      this.menuList = this.tempMenuList;
+    }
   }
 
   drop(event: CdkDragDrop<WeekMenuDto[]>) {
