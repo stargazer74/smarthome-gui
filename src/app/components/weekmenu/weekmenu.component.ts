@@ -16,6 +16,8 @@ export class WeekmenuComponent implements OnInit {
   constructor(private weekMenuService: WeekmenuService, private fb: FormBuilder) {
   }
 
+  submitted = false;
+
   menuList: WeekMenuDto[];
 
   weekList: WeekMenuDto[];
@@ -32,9 +34,11 @@ export class WeekmenuComponent implements OnInit {
     });
     this.weekList = [];
     this.weekMenuFormGroup = this.fb.group({
-      name: new FormControl(this.weekMenuRequestDto.name, [Validators.required])
+      name: new FormControl('', [Validators.required])
     });
   }
+
+  get form() { return this.weekMenuFormGroup.controls; }
 
   onSearchFieldChange(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -62,6 +66,12 @@ export class WeekmenuComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
+    console.log(this.weekMenuFormGroup.valid);
     console.log(this.weekMenuRequestDto);
+    if (this.weekMenuFormGroup.invalid) {
+      console.log('WARUM????????????????????');
+      return;
+    }
   }
 }
