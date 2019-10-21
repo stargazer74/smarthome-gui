@@ -3,7 +3,7 @@ import {WeekmenuService} from '../../services/weekmenu.service';
 import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {WeekMenuDto} from '../../dto/weekmenu/week-menu-dto';
 import {IngredientDto} from '../../dto/weekmenu/ingredient-dto';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {WeekMenuRequestDto} from '../../dto/weekmenu/week-menu-request-dto';
 
 @Component({
@@ -30,6 +30,8 @@ export class WeekmenuComponent implements OnInit {
 
   weekMenuFormGroup: FormGroup;
 
+  ingredientFormItems: FormArray;
+
   ngOnInit() {
     this.weekMenuService.listWeekMenus().subscribe(result => {
       this.menuList = result.weekMenuDtos;
@@ -37,8 +39,15 @@ export class WeekmenuComponent implements OnInit {
     });
     this.weekList = [];
     this.weekMenuFormGroup = this.fb.group({
-      name: new FormControl(this.weekMenuRequestDto.name, [Validators.required])
+      name: new FormControl(this.weekMenuRequestDto.name, [Validators.required]),
+      ingredients: this.fb.array([this.createIngredientFormGroup()])
     });
+    this.ingredientFormItems = this.weekMenuFormGroup.get('ingredients') as FormArray;
+    console.log(this.weekMenuFormGroup);
+  }
+
+  get ingredientsFormGroup() {
+    return this.weekMenuFormGroup.get('ingredients') as FormArray;
   }
 
   get form() {
@@ -70,7 +79,6 @@ export class WeekmenuComponent implements OnInit {
   }
 
   showIngredients(id: number) {
-    console.log('Foobar' + id);
     const weekMenuDto = this.weekList.find(item => item.id === id);
     this.ingredients = weekMenuDto.ingredients;
   }
@@ -87,5 +95,23 @@ export class WeekmenuComponent implements OnInit {
   menuItemClicked(id: number) {
     const weekMenuDto = this.tempMenuList.find(menu => menu.id === id);
     this.weekMenuFormGroup.get('name').setValue(weekMenuDto.name);
+    const ingredients = this.weekMenuFormGroup.get('ingredients') as FormArray;
+    ingredients.controls[0].get('name').setValue(weekMenuDto.ingredients[0].name);
+  }
+
+  private createIngredientFormGroup() {
+    return this.fb.group({
+      name: new FormControl(null, [Validators.required]),
+      amount: new FormControl(null, [Validators.required]),
+      unitOfMeasure: new FormControl(null, [Validators.required])
+    });
+  }
+
+  addIngredientItem(item) {
+    this.ingredientFormItems.push(item);
+  }
+
+  removeIngredientItem(index) {
+    this.ingredientFormItems.removeAt(index);
   }
 }

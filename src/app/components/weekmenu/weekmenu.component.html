@@ -58,6 +58,23 @@
                       <div *ngIf="form.name.errors.required">Es muss ein Menüname angegeben werden.</div>
                     </div>
                   </div>
+                  <div formArrayName="ingredients">
+                    <div class="row">
+                      <div class="col-md-6" *ngFor="let ingredient of ingredientsFormGroup.controls; let i = index;">
+                        <div [formGroupName]="i">
+                          <div class="form-group">
+                            <input type="text" formControlName="name" class="form-control" name="name"
+                                   [ngClass]="{ 'is-invalid': submitted && ingredient.get('name').errors }"
+                                   placeholder="Zutat"/>
+                            <div *ngIf="submitted && ingredient.get('name').errors" class="invalid-feedback">
+                              <div *ngIf="ingredient.get('name').errors.required">Es muss ein Name für die Zutat eingegeben werden.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <button type="submit" class="btn btn-primary">Menü abspeichern</button>
                 </form>
               </div>
