@@ -100,6 +100,7 @@ export class WeekmenuComponent implements OnInit {
 
   menuItemClicked(id: number) {
     const weekMenuDto = this.tempMenuList.find(menu => menu.id === id);
+    this.weekMenuFormGroup.get('name').setValue(weekMenuDto.name);
     this.clearFormArray(this.ingredientFormItems);
     weekMenuDto.ingredients.forEach(item => {
       const formGroup = this.createIngredientFormGroup();
@@ -130,9 +131,5 @@ export class WeekmenuComponent implements OnInit {
 
   removeIngredientItem(index) {
     this.ingredientFormItems.removeAt(index);
-  }
-
-  removeIngredientClicked(id: AbstractControl) {
-    console.log('###########################################');
   }
 }
