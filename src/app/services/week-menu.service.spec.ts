@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WeekmenuService } from './weekmenu.service';
+import { WeekMenuService } from './week-menu.service';
 
-describe('WeekmenuService', () => {
+describe('WeekMenuService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: WeekmenuService = TestBed.get(WeekmenuService);
+    const service: WeekMenuService = TestBed.get(WeekMenuService);
     expect(service).toBeTruthy();
   });
 });

@@ -4,7 +4,6 @@ import {JsonObject, JsonProperty} from 'json2typescript';
 @JsonObject('IngredientDto')
 export class IngredientDto {
 
-  @IsDefined()
   @JsonProperty('id', Number)
   public id: number = null;
 

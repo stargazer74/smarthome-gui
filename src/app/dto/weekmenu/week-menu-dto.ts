@@ -5,7 +5,6 @@ import {IngredientDto} from './ingredient-dto';
 @JsonObject('WeekMenuDto')
 export class WeekMenuDto {
 
-  @IsDefined()
   @JsonProperty('id', Number)
   public id: number = null;
 

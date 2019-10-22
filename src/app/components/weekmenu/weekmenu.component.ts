@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {WeekmenuService} from '../../services/weekmenu.service';
-import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {WeekMenuService} from '../../services/week-menu.service';
+import {CdkDragDrop, copyArrayItem, moveItemInArray} from '@angular/cdk/drag-drop';
 import {WeekMenuDto} from '../../dto/weekmenu/week-menu-dto';
 import {IngredientDto} from '../../dto/weekmenu/ingredient-dto';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {WeekMenuRequestDto} from '../../dto/weekmenu/week-menu-request-dto';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {DropDownValueDto} from '../../dto/weekmenu/dropdown-value.dto';
 
 @Component({
   selector: 'app-weekmenu',
@@ -13,7 +13,7 @@ import {WeekMenuRequestDto} from '../../dto/weekmenu/week-menu-request-dto';
 })
 export class WeekmenuComponent implements OnInit {
 
-  constructor(private weekMenuService: WeekmenuService, private fb: FormBuilder) {
+  constructor(private weekMenuService: WeekMenuService, private fb: FormBuilder) {
   }
 
   submitted = false;
@@ -26,11 +26,13 @@ export class WeekmenuComponent implements OnInit {
 
   ingredients: IngredientDto[];
 
-  weekMenuRequestDto: WeekMenuRequestDto = new WeekMenuRequestDto();
+  weekMenuRequestDto: WeekMenuDto = new WeekMenuDto();
 
   weekMenuFormGroup: FormGroup;
 
   ingredientFormItems: FormArray;
+
+  unitOfMeasureValues: DropDownValueDto[];
 
   ngOnInit() {
     this.weekMenuService.listWeekMenus().subscribe(result => {
@@ -43,7 +45,11 @@ export class WeekmenuComponent implements OnInit {
       ingredients: this.fb.array([this.createIngredientFormGroup()])
     });
     this.ingredientFormItems = this.weekMenuFormGroup.get('ingredients') as FormArray;
-    console.log(this.weekMenuFormGroup);
+
+    // get values for unit of measure dropdown
+    this.weekMenuService.getUnitOgMeasures().subscribe(response => {
+      this.unitOfMeasureValues = response.dropDownValueDtos;
+    });
   }
 
   get ingredientsFormGroup() {
@@ -84,7 +90,7 @@ export class WeekmenuComponent implements OnInit {
   }
 
   onSubmit() {
-    this.weekMenuRequestDto = this.weekMenuFormGroup.value as WeekMenuRequestDto;
+    this.weekMenuRequestDto = this.weekMenuFormGroup.value as WeekMenuDto;
     console.log(this.weekMenuRequestDto);
     this.submitted = true;
     if (this.weekMenuFormGroup.invalid) {
@@ -94,16 +100,27 @@ export class WeekmenuComponent implements OnInit {
 
   menuItemClicked(id: number) {
     const weekMenuDto = this.tempMenuList.find(menu => menu.id === id);
-    this.weekMenuFormGroup.get('name').setValue(weekMenuDto.name);
-    const ingredients = this.weekMenuFormGroup.get('ingredients') as FormArray;
-    ingredients.controls[0].get('name').setValue(weekMenuDto.ingredients[0].name);
+    this.clearFormArray(this.ingredientFormItems);
+    weekMenuDto.ingredients.forEach(item => {
+      const formGroup = this.createIngredientFormGroup();
+      formGroup.get('name').setValue(item.name);
+      formGroup.get('amount').setValue(item.amount);
+      formGroup.get('unitOfMeasure').setValue(item.unitOfMeasure);
+      this.addIngredientItem(formGroup);
+    });
+  }
+
+  clearFormArray(formArray: FormArray) {
+    while (formArray.length !== 0) {
+      formArray.removeAt(0);
+    }
   }
 
   private createIngredientFormGroup() {
     return this.fb.group({
       name: new FormControl(null, [Validators.required]),
       amount: new FormControl(null, [Validators.required]),
-      unitOfMeasure: new FormControl(null, [Validators.required])
+      unitOfMeasure: new FormControl('TL', [Validators.required])
     });
   }
 
@@ -113,5 +130,9 @@ export class WeekmenuComponent implements OnInit {
 
   removeIngredientItem(index) {
     this.ingredientFormItems.removeAt(index);
+  }
+
+  removeIngredientClicked(id: AbstractControl) {
+    console.log('###########################################');
   }
 }
