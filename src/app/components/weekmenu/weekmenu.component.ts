@@ -28,6 +28,8 @@ export class WeekmenuComponent implements OnInit {
 
   weekMenuRequestDto: WeekMenuDto = new WeekMenuDto();
 
+  selectedWeekMenuDto: WeekMenuDto;
+
   weekMenuFormGroup: FormGroup;
 
   ingredientFormItems: FormArray;
@@ -41,6 +43,7 @@ export class WeekmenuComponent implements OnInit {
     });
     this.weekList = [];
     this.weekMenuFormGroup = this.fb.group({
+      id: new FormData(),
       name: new FormControl(this.weekMenuRequestDto.name, [Validators.required]),
       ingredients: this.fb.array([this.createIngredientFormGroup()])
     });
@@ -91,18 +94,19 @@ export class WeekmenuComponent implements OnInit {
 
   onSubmit() {
     this.weekMenuRequestDto = this.weekMenuFormGroup.value as WeekMenuDto;
-    console.log(this.weekMenuRequestDto);
     this.submitted = true;
     if (this.weekMenuFormGroup.invalid) {
       return;
     }
+    // remove stored WeekMenuDto to prevent double insert
+    this.selectedWeekMenuDto = null;
   }
 
   menuItemClicked(id: number) {
-    const weekMenuDto = this.tempMenuList.find(menu => menu.id === id);
-    this.weekMenuFormGroup.get('name').setValue(weekMenuDto.name);
+    this.selectedWeekMenuDto = this.tempMenuList.find(menu => menu.id === id);
+    this.weekMenuFormGroup.get('name').setValue(this.selectedWeekMenuDto.name);
     this.clearFormArray(this.ingredientFormItems);
-    weekMenuDto.ingredients.forEach(item => {
+    this.selectedWeekMenuDto.ingredients.forEach(item => {
       const formGroup = this.createIngredientFormGroup();
       formGroup.get('name').setValue(item.name);
       formGroup.get('amount').setValue(item.amount);
@@ -121,7 +125,7 @@ export class WeekmenuComponent implements OnInit {
     return this.fb.group({
       name: new FormControl(null, [Validators.required]),
       amount: new FormControl(null, [Validators.required]),
-      unitOfMeasure: new FormControl('TL', [Validators.required])
+      unitOfMeasure: new FormControl(null, [Validators.required])
     });
   }
 
@@ -131,5 +135,9 @@ export class WeekmenuComponent implements OnInit {
 
   removeIngredientItem(index) {
     this.ingredientFormItems.removeAt(index);
+  }
+
+  addIngredient() {
+    this.addIngredientItem(this.createIngredientFormGroup());
   }
 }

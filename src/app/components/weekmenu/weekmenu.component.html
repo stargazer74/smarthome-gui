@@ -83,20 +83,27 @@
                             </div>
                           </div>
                           <div class="form-group col-md-2">
-                            <select class="form-control" formControlName="unitOfMeasure" name="unitOfMeasure">
+                            <select class="form-control" [ngClass]="{ 'is-invalid': submitted &&
+                            ingredient.get('unitOfMeasure').errors }" formControlName="unitOfMeasure"
+                                    name="unitOfMeasure">
                               <option *ngFor="let unitOfMeasure of unitOfMeasureValues"
                                       [value]="unitOfMeasure.value">{{unitOfMeasure.viewValue}}</option>
                             </select>
+                            <div *ngIf="submitted && ingredient.get('unitOfMeasure').errors" class="invalid-feedback">
+                              <div *ngIf="ingredient.get('unitOfMeasure').errors.required">Es muss eine Einheit
+                                angegeben werden.
+                              </div>
+                            </div>
                           </div>
                           <div class="form-group col-md-1">
                             <button type="button" class="btn btn-secondary"
-                                    (click)="removeIngredientItem(i)"><i
-                              class="fa fa-minus"></i></button>
+                                    (click)="removeIngredientItem(i)"><i class="fa fa-minus"></i></button>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                  <button type="button" class="btn btn-secondary" (click)="addIngredient()">Zutat hinzufügen</button>
                   <button type="submit" class="btn btn-primary">Menü abspeichern</button>
                 </form>
               </div>
