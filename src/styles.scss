@@ -9,3 +9,15 @@
 .default-theme {
   @include angular-material-theme($smarthome-gui-black-theme);
 }
+
+.red {
+  color: #f6acaa;
+}
+
+.green {
+  color: #ade0ad;
+}
+
+.icon-lg {
+  font-size: large;
+}

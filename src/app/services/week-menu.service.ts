@@ -6,6 +6,7 @@ import {WeekMenuListDto} from '../dto/weekmenu/week-menu-list-dto';
 import {validate} from 'class-validator';
 import {DropDownValueDto} from '../dto/weekmenu/dropdown-value.dto';
 import {DropDownValueListDto} from "../dto/weekmenu/dropdown-list-value.dto";
+import {WeekMenuDto} from "../dto/weekmenu/week-menu-dto";
 
 const API_URL = environment.apiUrl;
 
@@ -28,6 +29,19 @@ export class WeekMenuService {
       }
     );
     return weekMenuListDto;
+  }
+
+  insertWeekMenus(menuDto: WeekMenuDto): Observable<WeekMenuDto> {
+    const weekMenuDto = this.http.post<WeekMenuDto>(API_URL + '/weekMenus', menuDto);
+    validate(weekMenuDto).then(errors => {
+        if (errors.length > 0) {
+          console.log('validation failed. errors: ', errors);
+        } else {
+          return weekMenuDto;
+        }
+      }
+    );
+    return weekMenuDto;
   }
 
   getUnitOgMeasures(): Observable<DropDownValueListDto> {

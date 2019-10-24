@@ -97,14 +97,26 @@
                           </div>
                           <div class="form-group col-md-1">
                             <button type="button" class="btn btn-secondary"
-                                    (click)="removeIngredientItem(i)"><i class="fa fa-minus"></i></button>
+                                    (click)="removeIngredientItem(i)"
+                                    [disabled]="removeIngredientButtonDisabled"><i class="fa-lg red fa fa-minus"></i>
+                            </button>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-secondary" (click)="addIngredient()">Zutat hinzufügen</button>
-                  <button type="submit" class="btn btn-primary">Menü abspeichern</button>
+                  <button type="button" [hidden]="editMenuButtonHidden" class="btn btn-secondary mr-1"
+                          (click)="editMenu()">
+                    <i class="fa-lg green fa fa-edit"></i></button>
+                  <button type="button" [hidden]="addMenuButtonHidden" class="btn btn-secondary mr-1" (click)="addMenu()">
+                    <i class="fa-lg green fa fa-plus"></i></button>
+                  <button type="button" [hidden]="addIngredientButtonHidden" class="btn btn-secondary mr-1"
+                          (click)="addIngredient()">
+                    <i class="fa-lg green fa fa-plus-circle"></i></button>
+                  <button type="button" [hidden]="abortEditingButtonHidden" class="btn btn-secondary mr-1" (click)="abortEditing()">
+                    <i class="fa-lg red fa fa-times"></i></button>
+                  <button type="submit" [hidden]="saveMenuButtonHidden" class="btn btn-secondary mr-1">
+                    <i class="fa-lg green fa fa-save"></i></button>
                 </form>
               </div>
             </div>
