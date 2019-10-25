@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {WeekMenuListDto} from '../dto/weekmenu/week-menu-list-dto';
+import {MenuListDto} from '../dto/weekmenu/menu-list-dto';
 import {validate} from 'class-validator';
 import {DropDownValueDto} from '../dto/weekmenu/dropdown-value.dto';
 import {DropDownValueListDto} from "../dto/weekmenu/dropdown-list-value.dto";
-import {WeekMenuDto} from "../dto/weekmenu/week-menu-dto";
+import {MenuDto} from "../dto/weekmenu/menu-dto";
 
 const API_URL = environment.apiUrl;
 
@@ -18,8 +18,8 @@ export class WeekMenuService {
   constructor(private http: HttpClient) {
   }
 
-  listWeekMenus(): Observable<WeekMenuListDto> {
-    const weekMenuListDto = this.http.get<WeekMenuListDto>(API_URL + '/weekMenus/list');
+  listWeekMenus(): Observable<MenuListDto> {
+    const weekMenuListDto = this.http.get<MenuListDto>(API_URL + '/weekMenus/list');
     validate(weekMenuListDto).then(errors => {
         if (errors.length > 0) {
           console.log('validation failed. errors: ', errors);
@@ -31,8 +31,8 @@ export class WeekMenuService {
     return weekMenuListDto;
   }
 
-  insertWeekMenus(menuDto: WeekMenuDto): Observable<WeekMenuDto> {
-    const weekMenuDto = this.http.post<WeekMenuDto>(API_URL + '/weekMenus', menuDto);
+  insertWeekMenus(menuDto: MenuDto): Observable<MenuDto> {
+    const weekMenuDto = this.http.post<MenuDto>(API_URL + '/weekMenus', menuDto);
     validate(weekMenuDto).then(errors => {
         if (errors.length > 0) {
           console.log('validation failed. errors: ', errors);

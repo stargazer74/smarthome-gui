@@ -118,6 +118,9 @@
                   <button type="submit" [hidden]="saveMenuButtonHidden" class="btn btn-secondary mr-1">
                     <i class="fa-lg green fa fa-save"></i></button>
                 </form>
+                <div *ngIf="errorOnSave" class="red mt-2">
+                  Ups, da ist beim Speichern etwas schief gelaufen.
+                </div>
               </div>
             </div>
           </ng-template>

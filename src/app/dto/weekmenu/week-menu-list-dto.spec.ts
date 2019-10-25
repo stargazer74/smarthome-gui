@@ -1,8 +1,8 @@
-import {WeekMenuListDto} from './week-menu-list-dto';
+import {MenuListDto} from './menu-list-dto';
 
 
 describe('WeekMenuListDto', () => {
   it('should create an instance', () => {
-    expect(new WeekMenuListDto()).toBeTruthy();
+    expect(new MenuListDto()).toBeTruthy();
   });
 });

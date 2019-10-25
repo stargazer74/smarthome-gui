@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {WeekMenuService} from '../../services/week-menu.service';
 import {CdkDragDrop, copyArrayItem, moveItemInArray} from '@angular/cdk/drag-drop';
-import {WeekMenuDto} from '../../dto/weekmenu/week-menu-dto';
+import {MenuDto} from '../../dto/weekmenu/menu-dto';
 import {IngredientDto} from '../../dto/weekmenu/ingredient-dto';
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {DropDownValueDto} from '../../dto/weekmenu/dropdown-value.dto';
@@ -18,17 +18,17 @@ export class WeekmenuComponent implements OnInit {
 
   submitted = false;
 
-  menuList: WeekMenuDto[];
+  menuList: MenuDto[];
 
-  tempMenuList: WeekMenuDto[];
+  tempMenuList: MenuDto[];
 
-  weekList: WeekMenuDto[];
+  weekList: MenuDto[];
 
   ingredients: IngredientDto[];
 
-  weekMenuRequestDto: WeekMenuDto = new WeekMenuDto();
+  weekMenuRequestDto: MenuDto = new MenuDto();
 
-  selectedWeekMenuDto: WeekMenuDto;
+  selectedWeekMenuDto: MenuDto;
 
   weekMenuFormGroup: FormGroup;
 
@@ -48,11 +48,10 @@ export class WeekmenuComponent implements OnInit {
 
   saveMenuButtonHidden = true;
 
+  errorOnSave: boolean;
+
   ngOnInit() {
-    this.weekMenuService.listWeekMenus().subscribe(result => {
-      this.menuList = result.weekMenuDtos;
-      this.tempMenuList = result.weekMenuDtos;
-    });
+    this.getMenus();
     this.weekList = [];
     this.weekMenuFormGroup = this.createWeekMenuForm();
     this.ingredientFormItems = this.weekMenuFormGroup.get('ingredients') as FormArray;
@@ -63,6 +62,14 @@ export class WeekmenuComponent implements OnInit {
     });
 
     this.disableForm();
+    this.errorOnSave = false;
+  }
+
+  private getMenus() {
+    this.weekMenuService.listWeekMenus().subscribe(result => {
+      this.menuList = result.menuDtos;
+      this.tempMenuList = result.menuDtos;
+    });
   }
 
   get ingredientsFormGroup() {
@@ -92,7 +99,7 @@ export class WeekmenuComponent implements OnInit {
     }
   }
 
-  drop(event: CdkDragDrop<WeekMenuDto[]>) {
+  drop(event: CdkDragDrop<MenuDto[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -113,13 +120,23 @@ export class WeekmenuComponent implements OnInit {
   }
 
   onSubmit() {
-    this.weekMenuRequestDto = this.weekMenuFormGroup.value as WeekMenuDto;
+    this.weekMenuRequestDto = this.weekMenuFormGroup.value as MenuDto;
     this.submitted = true;
     if (this.weekMenuFormGroup.invalid) {
       return;
     }
-    this.weekMenuService.insertWeekMenus(this.weekMenuRequestDto).subscribe();
-    // remove stored WeekMenuDto to prevent double insert
+    this.weekMenuService.insertWeekMenus(this.weekMenuRequestDto).subscribe(() => {
+      this.abortEditingButtonHidden = false;
+      this.addIngredientButtonHidden = true;
+      this.saveMenuButtonHidden = true;
+      this.addMenuButtonHidden = true;
+      this.editMenuButtonHidden = false;
+      this.disableForm();
+      this.getMenus();
+    }, error => {
+      this.errorOnSave = true;
+    });
+    // remove stored MenuDto to prevent double insert
     this.selectedWeekMenuDto = null;
   }
 
@@ -203,6 +220,6 @@ export class WeekmenuComponent implements OnInit {
       this.ingredientsFormGroup.removeAt(0);
     }
     this.disableForm();
-    console.log(this.weekMenuFormGroup);
+    this.errorOnSave = false;
   }
 }

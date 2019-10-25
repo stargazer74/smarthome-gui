@@ -2,8 +2,8 @@ import {JsonObject, JsonProperty} from 'json2typescript';
 import {IsDefined} from 'class-validator';
 import {IngredientDto} from './ingredient-dto';
 
-@JsonObject('WeekMenuDto')
-export class WeekMenuDto {
+@JsonObject('MenuDto')
+export class MenuDto {
 
   @JsonProperty('id', Number)
   public id: number = null;
