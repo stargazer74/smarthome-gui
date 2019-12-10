@@ -43,6 +43,19 @@ export class WeekMenuService {
     return weekMenuDto;
   }
 
+  updateWeekMenu(menuDto: MenuDto): Observable<MenuDto> {
+    const weekMenuDto = this.http.put<MenuDto>(API_URL + '/week-menus', menuDto);
+    validate(weekMenuDto).then(errors => {
+        if (errors.length > 0) {
+          console.log('validation failed. errors: ', errors);
+        } else {
+          return weekMenuDto;
+        }
+      }
+    );
+    return weekMenuDto;
+  }
+
   getUnitOgMeasures(): Observable<DropDownValueListDto> {
     const dropDownValueListDto = this.http.get<DropDownValueListDto>(API_URL + '/week-menus/units-of-measure');
     validate(dropDownValueListDto).then(errors => {

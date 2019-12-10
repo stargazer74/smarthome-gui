@@ -50,6 +50,8 @@ export class WeekmenuComponent implements OnInit {
 
   errorOnSave: boolean;
 
+  errorOnUpdate: boolean;
+
   ngOnInit() {
     this.getMenus();
     this.weekList = [];
@@ -59,11 +61,11 @@ export class WeekmenuComponent implements OnInit {
     // get values for unit of measure dropdown
     this.weekMenuService.getUnitOgMeasures().subscribe(response => {
       this.unitOfMeasureValues = response.dropDownValueDtos;
-      console.log(this.unitOfMeasureValues);
     });
 
     this.disableForm();
     this.errorOnSave = false;
+    this.errorOnUpdate = false;
   }
 
   private getMenus() {
@@ -126,19 +128,32 @@ export class WeekmenuComponent implements OnInit {
     if (this.weekMenuFormGroup.invalid) {
       return;
     }
-    this.weekMenuService.insertWeekMenus(this.weekMenuRequestDto).subscribe(() => {
-      this.abortEditingButtonHidden = false;
-      this.addIngredientButtonHidden = true;
-      this.saveMenuButtonHidden = true;
-      this.addMenuButtonHidden = true;
-      this.editMenuButtonHidden = false;
-      this.disableForm();
-      this.getMenus();
-    }, error => {
-      this.errorOnSave = true;
-    });
+    if (this.weekMenuRequestDto.id !== null) {
+      this.weekMenuService.updateWeekMenu(this.weekMenuRequestDto).subscribe(() => {
+        this.refreshForm();
+      }, error => {
+        this.errorOnUpdate = true;
+      });
+    } else {
+      this.weekMenuService.insertWeekMenus(this.weekMenuRequestDto).subscribe(() => {
+        this.refreshForm();
+      }, error => {
+        this.errorOnSave = true;
+      });
+    }
+
     // remove stored MenuDto to prevent double insert
     this.selectedWeekMenuDto = null;
+  }
+
+  private refreshForm() {
+    this.abortEditingButtonHidden = false;
+    this.addIngredientButtonHidden = true;
+    this.saveMenuButtonHidden = true;
+    this.addMenuButtonHidden = true;
+    this.editMenuButtonHidden = false;
+    this.disableForm();
+    this.getMenus();
   }
 
   menuItemClicked(id: number) {
@@ -222,6 +237,7 @@ export class WeekmenuComponent implements OnInit {
     }
     this.disableForm();
     this.errorOnSave = false;
+    this.errorOnUpdate = false;
   }
 
   getMeasureOfUnitViewValue(unitOfMeasure: string) {
