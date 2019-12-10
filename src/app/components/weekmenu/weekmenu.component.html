@@ -38,7 +38,8 @@
               <div class="col-md-4">
                 <ul class="list-group-flush mt-3">
                   <li class="list-group-item"
-                      *ngFor="let ingredient of ingredients">{{ingredient.amount}} {{ingredient.unitOfMeasure}}
+                      *ngFor="let ingredient of ingredients">{{ingredient.amount}}
+                    {{getMeasureOfUnitViewValue(ingredient.unitOfMeasure)}}
                     {{ingredient.name}}</li>
                 </ul>
               </div>

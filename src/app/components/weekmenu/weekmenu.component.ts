@@ -59,6 +59,7 @@ export class WeekmenuComponent implements OnInit {
     // get values for unit of measure dropdown
     this.weekMenuService.getUnitOgMeasures().subscribe(response => {
       this.unitOfMeasureValues = response.dropDownValueDtos;
+      console.log(this.unitOfMeasureValues);
     });
 
     this.disableForm();
@@ -221,5 +222,10 @@ export class WeekmenuComponent implements OnInit {
     }
     this.disableForm();
     this.errorOnSave = false;
+  }
+
+  getMeasureOfUnitViewValue(unitOfMeasure: string) {
+    const dropDownValueDtos = this.unitOfMeasureValues.filter(a => a.value === unitOfMeasure);
+    return dropDownValueDtos[0].viewValue;
   }
 }
