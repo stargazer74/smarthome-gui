@@ -56,6 +56,10 @@ export class WeekMenuService {
     return weekMenuDto;
   }
 
+  deleteWeekMenu(id: number): Observable<{}> {
+    return this.http.delete(API_URL + '/week-menus/' + id);
+  }
+
   getUnitOgMeasures(): Observable<DropDownValueListDto> {
     const dropDownValueListDto = this.http.get<DropDownValueListDto>(API_URL + '/week-menus/units-of-measure');
     validate(dropDownValueListDto).then(errors => {

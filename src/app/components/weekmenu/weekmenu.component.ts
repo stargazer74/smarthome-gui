@@ -52,6 +52,8 @@ export class WeekmenuComponent implements OnInit {
 
   errorOnUpdate: boolean;
 
+  errorOnDelete: boolean;
+
   ngOnInit() {
     this.getMenus();
     this.weekList = [];
@@ -66,12 +68,16 @@ export class WeekmenuComponent implements OnInit {
     this.disableForm();
     this.errorOnSave = false;
     this.errorOnUpdate = false;
+    this.errorOnDelete = false;
   }
 
   private getMenus() {
     this.weekMenuService.listWeekMenus().subscribe(result => {
       this.menuList = result.menuDtos;
       this.tempMenuList = result.menuDtos;
+    }, error => {
+      this.menuList = [];
+      this.tempMenuList = [];
     });
   }
 
@@ -238,10 +244,20 @@ export class WeekmenuComponent implements OnInit {
     this.disableForm();
     this.errorOnSave = false;
     this.errorOnUpdate = false;
+    this.errorOnDelete = false;
   }
 
   getMeasureOfUnitViewValue(unitOfMeasure: string) {
     const dropDownValueDtos = this.unitOfMeasureValues.filter(a => a.value === unitOfMeasure);
     return dropDownValueDtos[0].viewValue;
+  }
+
+  removeMenu(id: number) {
+    this.weekMenuService.deleteWeekMenu(id).subscribe(() => {
+      this.abortEditing();
+      this.refreshForm();
+    }, error => {
+      this.errorOnDelete = true;
+    });
   }
 }
